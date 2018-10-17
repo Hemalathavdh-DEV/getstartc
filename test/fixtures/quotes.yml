@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  Enter_your_quote: MyText
+  Written_by: MyString
+
+two:
+  Enter_your_quote: MyText
+  Written_by: MyString

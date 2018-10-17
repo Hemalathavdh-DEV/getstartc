@@ -1,0 +1,31 @@
+<%= form_with model: @quote, local: true do |f| %>
+
+  <% if @quote.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@quote.errors.count, "error") %> This Submission can't be saved:
+      </h2>
+      <ul>
+        <% @quote.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+	
+  <p>
+		<%= f.label :Enter_your_quote %>
+	</p>
+	<p>
+		<%= f.text_area :Enter_your_quote, size: "60x12" %>
+	</p>
+	<p>
+		<%= f.label :Written_by %>
+		<%= f.text_field :Written_by %>
+	</p>
+	<p>
+		<%= f.submit "Create" %>
+	</p>
+<% end %>
+
+<%= link_to 'Back', quotes_path %>

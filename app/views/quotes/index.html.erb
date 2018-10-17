@@ -1,0 +1,21 @@
+<h1>Getting started </h1>
+<%= link_to 'My Blog', controller: 'quotes'%>
+<%= link_to 'New', new_quote_path %>
+<table>
+	<tr>
+		<th>Quote</th>
+		<th>Author</th>
+	</tr>
+	 
+	<% @quotes.each do |list| %>
+		<tr>
+			<td><%= list.Enter_your_quote %></td>
+			<td><%= list.Written_by %></td>
+			<td><%= link_to "Show", quote_path(list) %></td>
+			<td><%= link_to "Edit", edit_quote_path(list) %></td>
+			<td><%= link_to 'Destroy', quote_path(list),
+					method: :delete,
+					data: {confirm: "Are you sure?"}%></td>
+		</tr>
+	<% end %>
+</table>

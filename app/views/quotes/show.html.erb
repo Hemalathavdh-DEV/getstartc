@@ -1,0 +1,20 @@
+<table>
+	<tr>
+		<th>Quote</th>
+		<th>Author</th>
+	</tr>
+
+		<tr>
+			<td><%= @quote.Enter_your_quote %></td>
+			<td><%= @quote.Written_by %></td>
+		</tr>
+</table>
+
+<h3>Comments</h3>
+	<%= render @quote.comments %>
+
+<h2>Add a comment:</h2>
+	<%= render 'comments/form' %>
+
+<%= link_to 'Edit', edit_quote_path(@quote) %>
+<%= link_to 'Back', quotes_path %>
