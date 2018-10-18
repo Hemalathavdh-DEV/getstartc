@@ -17,11 +17,19 @@ class QuotesController < ApplicationController
   def create
   	 @quote = Quote.new(quotes_params)
 
-    if @quote.save
-      render json: @quote, status: :created, location: @quote
-    else
-      render json: @quote.errors, status: :unprocessable_entity
-    end
+      respond_to do |format|
+        if @quote.save
+          UserMailer.with(quote: @quote).practice_email.deliver_now!
+
+          format.html{ redirect_to(@quote, notice: 'Quote was successfully created')}
+          format.json{ render json: @quote, status: :created, location: @quote}
+
+        else
+          format.html { render action: 'new'}
+          format.json {render json: @quote.errors, status: :unprocessable_entity}
+
+        end
+      end
   end
 
   def show
@@ -32,21 +40,40 @@ class QuotesController < ApplicationController
   def update
   	@quote = Quote.find(params[:id])
 
-  	if @quote.update(quotes_params)
-      render json: @quote
-  		#redirect_to @quote
-  	else
-      render json: @quote.errors, status: :unprocessable_entity
-  		#render 'edit'
-  	end
+  	 respond_to do |format|
+      if @quote.update(quotes_params)
+        UserMailer.with(quote: @quote).update_email.deliver_now!
+
+          format.html{ redirect_to(@quote, notice: 'Quote was successfully edited')}
+          format.json{ render json: @quote, status: :edited, location: @quote}
+
+        else
+          format.html { render action: 'new'}
+          format.json {render json: @quote.errors, status: :unprocessable_entity}
+
+        end
+      #redirect_to quotes_path (index path)
+    end
   end
 
   def destroy
   	@quote = Quote.find(params[:id])
 
-  	 @quote.destroy
-      redirect_to quotes_path #index path
+    respond_to do |format|
+  	 if @quote.destroy
+      UserMailer.with(quote: @quote).destroy_email.deliver_now!
+
+          format.html{ redirect_to(@quote, notice: 'Quote was successfully created')}
+          format.json{ render json: @quote, status: :deleted, location: @quote}
+
+        else
+          format.html { render action: 'new'}
+          format.json {render json: @quote.errors, status: :unprocessable_entity}
+
+        end
+      #redirect_to quotes_path (index path)
     end
+  end
     
   
 
